@@ -19,10 +19,10 @@ function Header() {
 
   return (
     <header className="bg-gray-800 p-4">
-      <nav className="container mx-auto flex justify-between items-center">
+      <nav className="container mx-auto flex justify-between items-center flex-wrap">
         {/* Logo and Toggle Button */}
         <div className="flex items-center justify-between w-full md:w-auto">
-          <h1 className="text-white font-bold">MovieDB</h1>
+          <h1 className="text-white font-bold text-xl">MovieDB</h1>
           <button
             className="text-white md:hidden"
             onClick={toggleMenu}
@@ -48,7 +48,7 @@ function Header() {
 
         {/* Links */}
         <ul
-          className={`flex-col md:flex-row md:flex md:space-x-6 space-y-4 md:space-y-0 text-white mt-4 md:mt-0 transition-transform duration-300 ${
+          className={`w-full md:w-auto flex-col md:flex-row md:flex md:space-x-6 space-y-4 md:space-y-0 text-white mt-4 md:mt-0 transition-transform duration-300 ${
             isMenuOpen ? 'flex' : 'hidden'
           }`}
         >
@@ -87,14 +87,14 @@ function Header() {
         {/* Search Form */}
         <form
           onSubmit={handleSearchSubmit}
-          className="flex space-x-2 mt-4 md:mt-0"
+          className="flex w-full md:w-auto space-x-2 mt-4 md:mt-0"
         >
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search Movies..."
-            className="px-4 py-2 text-black rounded"
+            className="w-full md:w-auto px-4 py-2 text-black rounded"
           />
           <button
             type="submit"
