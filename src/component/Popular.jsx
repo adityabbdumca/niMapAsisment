@@ -52,7 +52,16 @@ const Popular = () => {
 
   return (
     <div className='flex flex-col justify-center'>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 300px)', gap: '50px', width: '55%', margin: '0 auto' }}>
+      {/* Grid container with responsive design */}
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: '20px',
+          width: '90%',
+          margin: '0 auto',
+        }}
+      >
         {movies.map((movie) => (
           <MoviePoster
             movieId={movie.id}
@@ -63,8 +72,9 @@ const Popular = () => {
           />
         ))}
       </div>
+
       {/* Pagination buttons */}
-      <div className="my-7 mx-auto">
+      <div className="my-7 mx-auto flex justify-center items-center">
         <button
           style={{ backgroundColor: 'red', marginRight: '1rem' }}
           onClick={handlePrevious}
