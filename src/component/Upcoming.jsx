@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import MoviePoster from './MoviePoster';
 
 //api = https://api.themoviedb.org/3/movie/upcoming?api_key=c45a857c193f6302f2b5061c3b85e743&language=en-US&page=1
@@ -10,39 +11,35 @@ const Upcoming = () => {
   const [currentPage, setCurrentPage] = useState(1); // Track current page
   const [totalPages, setTotalPages] = useState(1);
 
-  
-    const fetchUpcomingMovies = async () => {
-      try {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/movie/upcoming?api_key=c45a857c193f6302f2b5061c3b85e743&language=en-US&page=`
-        );
-        const data = await response.json();
-        setMovies(data.results);
-        setTotalPages(data.total_pages);
-        setLoading(false);
-      } catch (err) {
-        setError('Failed to fetch upcoming movies');
-        setLoading(false);
-      }
-    };
+  const fetchUpcomingMovies = async () => {
+    try {
+      const response = await axios.get(
+        `https://api.themoviedb.org/3/movie/upcoming?api_key=c45a857c193f6302f2b5061c3b85e743&language=en-US&page=${currentPage}`
+      );
+      setMovies(response.data.results);
+      setTotalPages(response.data.total_pages);
+      setLoading(false);
+    } catch (err) {
+      setError('Failed to fetch upcoming movies');
+      setLoading(false);
+    }
+  };
 
-    useEffect(() => {
-      fetchUpcomingMovies();
-    }, [currentPage]);
+  useEffect(() => {
+    fetchUpcomingMovies();
+  }, [currentPage]);
 
-    const handlePrevious = () => {
-      if (currentPage > 1) {
-        setCurrentPage(currentPage - 1); // Go to the previous page
-      }
-    };
-  
-    const handleNext = () => {
-      if (currentPage < totalPages) {
-        setCurrentPage(currentPage + 1); // Go to the next page
-      }
-    };
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1); // Go to the previous page
+    }
+  };
 
-  
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1); // Go to the next page
+    }
+  };
 
   if (loading) {
     return <p>Loading...</p>;
@@ -54,7 +51,15 @@ const Upcoming = () => {
 
   return (
     <div className='flex flex-col justify-center'>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 300px)', gap: '50px', width:'55%', margin:'0 auto' }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: '20px',
+          width: '90%',
+          margin: '0 auto',
+        }}
+      >
         {movies.map((movie) => (
           <MoviePoster
             movieId={movie.id}
@@ -68,7 +73,7 @@ const Upcoming = () => {
       {/* Pagination buttons */}
       <div className="my-7 mx-auto">
         <button
-          style={{backgroundColor:'red', marginRight:'1rem'}}
+          style={{ backgroundColor: 'red', marginRight: '1rem' }}
           onClick={handlePrevious}
           disabled={currentPage === 1}
           className="px-4 py-2 bg-gray-500 text-white rounded disabled:bg-gray-300"
@@ -79,7 +84,7 @@ const Upcoming = () => {
           Page {currentPage} of {totalPages}
         </span>
         <button
-          style={{backgroundColor:'green', marginLeft:'1rem'}}
+          style={{ backgroundColor: 'green', marginLeft: '1rem' }}
           onClick={handleNext}
           disabled={currentPage === totalPages}
           className="px-4 py-2 bg-gray-500 text-white rounded disabled:bg-gray-300"
@@ -90,4 +95,5 @@ const Upcoming = () => {
     </div>
   );
 };
+
 export default Upcoming;
