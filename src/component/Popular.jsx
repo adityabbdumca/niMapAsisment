@@ -1,11 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import MoviePoster from './MoviePoster';
-
-
-
-//api_key = c45a857c193f6302f2b5061c3b85e743
-
-//api = https://api.themoviedb.org/3/movie/popular?api_key=c45a857c193f6302f2b5061c3b85e743&language=en-US&page=1
 
 const Popular = () => {
   const [movies, setMovies] = useState([]);
@@ -14,14 +9,13 @@ const Popular = () => {
   const [currentPage, setCurrentPage] = useState(1); // Track current page
   const [totalPages, setTotalPages] = useState(1);
 
-
   const fetchPopularMovies = async () => {
     try {
       setLoading(true); // Start loading
-      const response = await fetch(
+      const response = await axios.get(
         `https://api.themoviedb.org/3/movie/popular?api_key=c45a857c193f6302f2b5061c3b85e743&language=en-US&page=${currentPage}`
       );
-      const data = await response.json();
+      const data = response.data;
       setMovies(data.results);
       setTotalPages(data.total_pages); // Set the total pages from the response
       setLoading(false); // Stop loading
@@ -48,7 +42,6 @@ const Popular = () => {
     }
   };
 
-
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -59,7 +52,7 @@ const Popular = () => {
 
   return (
     <div className='flex flex-col justify-center'>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 300px)', gap: '50px', width:'55%', margin:'0 auto'}}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 300px)', gap: '50px', width: '55%', margin: '0 auto' }}>
         {movies.map((movie) => (
           <MoviePoster
             movieId={movie.id}
@@ -73,7 +66,7 @@ const Popular = () => {
       {/* Pagination buttons */}
       <div className="my-7 mx-auto">
         <button
-          style={{backgroundColor:'red', marginRight:'1rem'}}
+          style={{ backgroundColor: 'red', marginRight: '1rem' }}
           onClick={handlePrevious}
           disabled={currentPage === 1}
           className="px-4 py-2 bg-gray-500 text-white rounded disabled:bg-gray-300"
@@ -84,7 +77,7 @@ const Popular = () => {
           Page {currentPage} of {totalPages}
         </span>
         <button
-          style={{backgroundColor:'green', marginLeft:'1rem'}}
+          style={{ backgroundColor: 'green', marginLeft: '1rem' }}
           onClick={handleNext}
           disabled={currentPage === totalPages}
           className="px-4 py-2 bg-gray-500 text-white rounded disabled:bg-gray-300"
@@ -96,4 +89,4 @@ const Popular = () => {
   );
 };
 
-export default Popular
+export default Popular;

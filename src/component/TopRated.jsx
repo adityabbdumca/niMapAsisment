@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import MoviePoster from './MoviePoster';
 
 const TopRated = () => {
@@ -10,12 +11,11 @@ const TopRated = () => {
 
   const fetchTopRatedMovies = async () => {
     try {
-      const response = await fetch(
+      const response = await axios.get(
         `https://api.themoviedb.org/3/movie/top_rated?api_key=c45a857c193f6302f2b5061c3b85e743&language=en-US&page=${currentPage}`
       );
-      const data = await response.json();
-      setMovies(data.results);
-      setTotalPages(data.total_pages);
+      setMovies(response.data.results);
+      setTotalPages(response.data.total_pages);
       setLoading(false);
     } catch (err) {
       setError('Failed to fetch top-rated movies');
@@ -52,9 +52,9 @@ const TopRated = () => {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 300px)',
-          gap: '50px',
-          width: '55%',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: '20px',
+          width: '90%',
           margin: '0 auto',
         }}
       >
@@ -63,7 +63,7 @@ const TopRated = () => {
             movieId={movie.id}
             key={movie.id}
             title={movie.title}
-            imageUrl={movie.poster_path} // Relative path for the poster
+            imageUrl={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} // Complete URL for the poster
             rating={movie.vote_average}
           />
         ))}
