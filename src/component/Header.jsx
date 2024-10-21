@@ -11,6 +11,9 @@ function Header() {
     if (searchQuery.trim()) {
       navigate(`/search/${searchQuery}`);
     }
+    else {
+      navigate('/'); // Redirect to homepage if the search is empty
+    }
   };
 
   const toggleMenu = () => {
