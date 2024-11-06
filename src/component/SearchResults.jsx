@@ -66,7 +66,7 @@ const SearchResults = () => {
         <button
           onClick={handlePrevious}
           disabled={currentPage === 1}
-          className="px-4 py-2 bg-red-500 text-white rounded disabled:bg-red-300"
+          className="px-4 py-2 bg-red-500 text-white rounded"
         >
           Previous
         </button>
@@ -76,7 +76,7 @@ const SearchResults = () => {
         <button
           onClick={handleNext}
           disabled={currentPage === totalPages}
-          className="px-4 py-2 bg-green-500 text-white rounded disabled:bg-green-300"
+          className="px-4 py-2 bg-green-500 text-white rounded "
         >
           Next
         </button>
