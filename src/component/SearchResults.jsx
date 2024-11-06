@@ -70,9 +70,10 @@ const SearchResults = () => {
         >
           Previous
         </button>
-        <span className=" text-white">
-          Page {currentPage} of {totalPages}
-        </span>
+        <span className="text-sm sm:text-base md:text-lg lg:text-xl text-white font-medium">
+  Page {currentPage} of {totalPages}
+</span>
+
         <button
           onClick={handleNext}
           disabled={currentPage === totalPages}
