@@ -12,7 +12,7 @@ function Header() {
       navigate(`/search/${searchQuery}`);
     }
     else {
-      navigate('/'); // Redirect to homepage if the search is empty
+      navigate('/'); 
     }
   };
 
