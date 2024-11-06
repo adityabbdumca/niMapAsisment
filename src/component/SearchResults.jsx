@@ -70,7 +70,7 @@ const SearchResults = () => {
         >
           Previous
         </button>
-        <span className="text-gray-700">
+        <span className=" text-white">
           Page {currentPage} of {totalPages}
         </span>
         <button
